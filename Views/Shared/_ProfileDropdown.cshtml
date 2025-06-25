@@ -1,0 +1,38 @@
+@{
+    var currentPath = Context.Request.Path.Value;
+    var user = await UserManager.GetUserAsync(User);
+    var userType = User.FindFirst("UserType")?.Value;
+}
+
+<div>
+    <button id="profile-dropdown-button" class="flex items-center text-sm rounded-full focus:outline-none">
+        <img class="h-8 w-8 rounded-full" src="/images/male.png" alt="User profile">
+    </button>
+
+    <div id="profile-dropdown-menu"
+        class="profile-dropdown origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div class="px-4 py-3">
+            <p class="text-sm font-medium text-gray-900">@(user!.FullName)</p>
+            <p class="text-sm text-gray-500 truncate">@(user!.Email)</p>
+        </div>
+        <div class="border-t border-gray-200"></div>
+        @if (userType == "Admin")
+        {
+            <a href="/admin"
+                class="!text-black block px-4 py-2 text-sm hover:bg-gray-200 transition-colors duration-150 @(currentPath == "/admin" ? "!text-blue-500 bg-gray-200" : "!text-black")">Admin
+                Panel</a>
+        }
+        <a href="/profile"
+            class="!text-black block px-4 py-2 text-sm hover:bg-gray-200 transition-colors duration-150 @(currentPath == "/profile" ? "!text-blue-500 bg-gray-200" : "!text-black")">Profile</a>
+        <a href="/profile/dashboard"
+            class="!text-black block px-4 py-2 text-sm hover:bg-gray-200 transition-colors duration-150 @(currentPath == "/profile/dashboard" ? "!text-blue-500 bg-gray-200" : "!text-black")">Dashboard</a>
+        <div class="border-t border-gray-200"></div>
+        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+            asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button id="logout" type="submit"
+                class="block w-full !text-start px-4 py-2 text-sm !text-red-600 hover:bg-gray-200 transition-colors duration-150">
+                Logout
+            </button>
+        </form>
+    </div>
+</div>

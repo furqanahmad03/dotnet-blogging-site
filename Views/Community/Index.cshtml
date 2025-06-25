@@ -1,0 +1,57 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<section class="flex md:flex-row flex-col gap-10 xl:px-10 px-4 my-24">
+
+    <div class="x-section md:w-2/3 w-full">
+        <div class="create-post bg-gray-200 rounded-md shadow-md p-4 mb-4 border border-gray-300">
+            <h3 class="mx-3 mb-3 font-bold text-lg">Create Post</h3>
+            <textarea name="CreatedPost" id="CreatedPost" rows="2"
+                class="w-full bg-gray-50 px-4 py-4 rounded-2xl outline-none mb-2" style="resize: none;"
+                placeholder="What's on your mind?"></textarea>
+            <div class="flex justify-between items-center">
+                <div></div>
+                <button type="button" class="flex text-sm rounded-full bg-blue-800 text-white px-4 py-2 community-button-hover"><img
+                        src="images/publish.svg" alt="Publish">&nbsp;Publish</button>
+            </div>
+        </div>
+
+        <div class="x-posts" id="x-posts">
+            <div class="post bg-white rounded-md shadow-md md:p-7 p-4 mb-4 border border-gray-300">
+                <div class="post-head flex gap-3">
+                    <img class="rounded-full w-10 h-10 overflow-hidden" src="images/male.png" alt="Profile Pic">
+                    <div>
+                        <h6 class="text-sm tracking-wide">Furqan Ahmad</h6>
+                        <p class="text-xs text-gray-500">6 min ago</p>
+                    </div>
+                </div>
+                <div class="post-body mt-3">
+                    <p class="post-content text-sm text-justify">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eius ipsum eos itaque atque
+                        recusandae hic
+                        possimus libero voluptates non perferendis iusto temporibus vitae quod et, dolor beatae iure
+                        quidem.
+                    </p>
+                </div>
+                <div class="post-footer flex justify-between items-center mt-4 gap-3">
+                    <input type="text" name="comment" id="comment"
+                        class="w-full bg-gray-100 px-4 py-2 rounded-2xl outline-none text-sm"
+                        placeholder="Add a comment...">
+                    <button type="button" class="flex text-sm rounded-full bg-blue-800 text-white p-2 pr-[10px]"><img
+                            src="images/publish.svg" alt="Send"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <partial name="_CommunitySidePanel" />
+
+</section>
+
+
+@section Scripts {
+    <script type="module" src="~/js/community.js"></script>
+}

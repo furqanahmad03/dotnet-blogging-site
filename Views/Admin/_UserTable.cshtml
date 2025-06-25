@@ -1,0 +1,135 @@
+@Html.AntiForgeryToken()
+
+
+<table id="myTable" class="display bg-white">
+    <thead class="!bg-black text-white">
+        <tr>
+            <th style="width: 5%;">Sr.</th>
+            <th style="width: 23%;">Name</th>
+            <th style="width: 21%;">Email</th>
+            <th style="width: 16%;">Phone</th>
+            <th style="width: 15%;">Joined</th>
+            <th style="width: 10%;">Status</th>
+            <th style="width: 10%;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td class="text-center text-sm">@(user.Id)</td>
+                <td>@user.FullName</td>
+                <td class="text-sm"><i class="fa fa-envelope" aria-hidden="true"></i> @(user.Email)</td>
+                <td class="text-sm">
+                    @if (!string.IsNullOrEmpty(user.Phone))
+                    {
+                        <i class="fa fa-phone" aria-hidden="true"></i> @(user.Phone)
+                    }
+                    else
+                    {
+                        <span class="italic text-red-700">Not provided</span>
+                    }
+                </td>
+                <td class="text-sm">@user.JoinedDate.ToString("dd-MMM-yyyy")</td>
+                <td class="text-xs">
+                    <span id="status-@user.Id" class="p-1 rounded-md shadow-md @(user.Status == Status.ACTIVE ? "bg-green-600" : "bg-red-600")">
+                        @user.Status.ToString()
+                    </span>
+                </td>
+                <td>
+                    <div class="flex gap-2">
+                        @if (user.Status == Status.ACTIVE)
+                        {
+                            <button type="button" title="Suspend" class="suspend-btn" data-userid="@user.Id">
+                                <i class="fa fa-pause text-green-600" aria-hidden="true"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" title="Reopen" class="active-btn" data-userid="@user.Id">
+                                <i class="fa-solid fa-play text-gray-600">‌</i>
+                            </button>
+
+                        }
+
+                        <button type="button" data-userid="@user.Id" title="Delete" class="delete-btn"><i class="fa fa-trash text-red-600" aria-hidden="true"></i></button>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    function getRequestVerificationToken() {
+        return $('input[name="__RequestVerificationToken"]').val();
+    }
+
+    // Click handler for suspend/unsuspend buttons
+    $(".suspend-btn, .active-btn").click(function () {
+        console.log("button clicked");
+        var btn = $(this);
+        var userId = btn.data("userid");
+        var isSuspend = btn.hasClass("suspend-btn");
+        var url = isSuspend ? "/Admin/SuspendUser" : "/Admin/UnsuspendUser";
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                userId: userId,
+                __RequestVerificationToken: getRequestVerificationToken()
+            },
+            success: function (response) {
+                if (response.success) {
+                    var statusSpan = $("#status-" + userId);
+                    statusSpan.text(response.newStatus)
+                        .removeClass("bg-green-600 bg-red-600")
+                        .addClass(response.statusClass);
+
+                    if (isSuspend) {
+                        btn.removeClass("suspend-btn").addClass("active-btn")
+                            .attr("title", "Reopen")
+                            .html('<i class="fa-solid fa-play text-gray-600"></i>');
+                    } else {
+                        btn.removeClass("active-btn").addClass("suspend-btn")
+                            .attr("title", "Suspend")
+                            .html('<i class="fa fa-pause text-green-600"></i>');
+                    }
+                } else {
+                    alert("Failed to update user status.");
+                }
+            },
+            error: function () {
+                alert("An error occurred while updating user status.");
+            }
+        });
+    });
+
+    $('.delete-btn').click(function () {
+        console.log("delete button clicked");
+        var btn = $(this);
+        var userId = btn.data("userid");
+        $.ajax({
+            type: "POST",
+            url: "/Admin/DeleteUser",
+            data: {
+                userId: userId,
+                __RequestVerificationToken: getRequestVerificationToken()
+            },
+            success: function (response) {
+                const row = btn.closest("tr");
+                row.css({
+                    "transform": "scale(0.98)",
+                    "opacity": 0,
+                    "transition": "all 0.3s ease"
+                });
+                setTimeout(() => row.remove(), 300);
+            },
+            error: function () {
+                alert("Error occured");
+            }
+        });
+    });
+</script>

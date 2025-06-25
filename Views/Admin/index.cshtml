@@ -1,0 +1,88 @@
+@{
+    Layout = null;
+}
+@model X.Models.User
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - X</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/X.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+
+</head>
+
+<body class="bg-gray-200">
+    <section class="flex gap-5">
+        <section class="side-panel bg-black w-[400px] h-screen sticky right-0 top-0">
+            <div class="flex flex-col gap-4 justify-between items-center px-5 pt-10 pb-5 border-b">
+                <div
+                    class="w-20 h-20 mx-auto rounded-full bg-gray-400 flex items-center justify-center text-gray-950 font-bold text-3xl box-border">
+                    @(@Model.FullName.Substring(0, 1))
+                </div>
+                <div class="text-center">
+                    <h1 class="font-bold text-lg text-white">Admin Panel</h1>
+                    <h2 class="italic text-gray-500 text-sm -mt-1">@Model.FullName</h2>
+                    <a href="/" class="text-green-600 italic text-sm underline">Back to site</a>
+                </div>
+            </div>
+            <nav class="flex flex-col gap-1 py-5 px-3">
+                <button
+                    class="text-white duration-300 px-2 rounded-lg w-full dashboardButton flex items-center gap-2 h-12 text-lg"
+                    data-target="users">
+                    <i class="fa fa-users" aria-hidden="true"></i> Users
+                </button>
+                <button
+                    class="text-white duration-300 px-2 rounded-lg w-full dashboardButton flex items-center gap-2 h-12 text-lg"
+                    data-target="blogs">
+                    <i class="fa-duotone fa-solid fa-blog"></i> Blogs
+                </button>
+                @* <button class="text-white duration-300 px-2 rounded-lg w-full dashboardButton flex items-center gap-2 h-12 text-lg"
+                        data-target="posts">
+                    <i class="fa-brands fa-twitter"></i> Posts
+                </button> *@
+                @* <button
+                    class="text-white duration-300 px-2 rounded-lg w-full dashboardButton flex items-center gap-2 h-12 text-lg"
+                    data-target="updates">
+                    <i class="fa fa-refresh" aria-hidden="true"></i> Updates
+                </button> *@
+                <button
+                    class="text-white duration-300 px-2 rounded-lg w-full dashboardButton flex items-center gap-2 h-12 text-lg"
+                    data-target="queries">
+                    <i class="fa fa-question-circle" aria-hidden="true"></i> Queries
+                </button>
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+                    asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="Logout" type="submit"
+                        class="duration-300 px-2 rounded-lg w-full dashboardLogoutButton flex items-center gap-2 h-12 text-lg  text-red-600">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                    </button>
+                </form>
+            </nav>
+        </section>
+        <section class="main-view w-full overflow-scroll p-6">
+            <div class="w-full bg-black text-white flex justify-between items-center px-5 py-3 rounded-lg shadow-md">
+                <h1 class="font-bold text-lg">Admin Dashboard</h1>
+                <button type="button" class="refreshButton"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            </div>
+            <div class="my-12">
+                <div id="adminTable">
+                    @* content will be displayed here *@
+                </div>
+            </div>
+        </section>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+
+</body>
+
+</html>

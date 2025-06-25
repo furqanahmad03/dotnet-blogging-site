@@ -1,0 +1,37 @@
+﻿services:
+  db:
+    container_name: mysql-db
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: BlogSite
+    ports:
+      - "3307:3306"
+    networks:
+      - projectnet
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backup.sql:/docker-entrypoint-initdb.d/backup.sql
+
+  blogera:
+    container_name: blogera
+    image: blogera
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "5000:80"
+    networks:
+      - projectnet
+    environment:
+      - ConnectionStrings__DefaultConnection=server=db;port=3306;database=BlogSite;user=root;password=root
+
+networks:
+  projectnet:
+    driver: bridge
+
+volumes:
+  mysql_data:

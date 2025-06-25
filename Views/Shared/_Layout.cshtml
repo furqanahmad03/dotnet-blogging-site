@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - X</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/X.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+</head>
+
+<body>
+    <header>
+        <partial name="_MainNavbar" />
+    </header>
+    <div>
+        <main style="min-height: calc(100vh - 170px);" class="max-w-7xl m-auto">
+            @RenderBody()
+        </main>
+
+        <footer class="md:py-6 py-4 bg-slate-100">
+            <div class="flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-4 lg:px-8">
+                <div class="flex text-sm">
+                    <p>© 2025 • &nbsp;</p>
+                    <a target="_blank" href="https://furqanahmad.netlify.app"
+                        class="hover:scale-110 duration-300 !text-black">Furqan
+                        Ahmad</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="https://www.linkedin.com/in/furqanahmad03" target="_blank"
+                        class="hover:scale-110 duration-300 !text-black"><i class="fab fa-linkedin text-xl"></i></a>
+                    <a href="https://www.github.com/furqanahmad03" target="_blank"
+                        class="hover:scale-110 duration-300 !text-black"><i class="fab fa-github text-xl"></i></a>
+                    <a href="mailto:hfurqan.se@gmail.com" target="_blank"
+                        class="hover:scale-110 duration-300 !text-black"><i class="fas fa-envelope text-xl"></i></a>
+                    <a href="https://www.facebook.com/furqanahmad03" target="_blank"
+                        class="hover:scale-110 duration-300 !text-black"><i class="fab fa-facebook text-xl"></i></a>
+                </div>
+            </div>
+        </footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

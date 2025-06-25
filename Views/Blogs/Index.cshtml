@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model List<X.Models.Blog>
+
+<section class="other-posts flex md:flex-row flex-col gap-10  xl:px-10 px-4 mt-24 mb-10">
+
+    <div class="times-new-roman md:w-2/3 w-full">
+
+        <section id="blog-page-cards" class="grid md:grid-cols-2 grid-cols-1 gap-7 border-b-2 border-gray-200 pb-10">
+            @foreach (var blog in Model)
+            {
+                <div
+                    class="card w-full shadow-lg rounded-lg overflow-hidden p-3 bg-slate-50 hover:scale-[1.03] transition-transform duration-300">
+                    <img src="data:image/png;base64,@(blog.Image)" alt="Post Image" class="w-full h-60 object-cover">
+                    <div class="p-4">
+                        <p class="card-category text-[#be9656] text-sm my-1 pt-5 tracking-widest text-center">@(blog.Category.ToUpper()) /
+                            @(blog.Type.ToUpper())</p>
+                        <a href="/blogs/@(blog.BlogId)">
+                            <h2 class="card-title font-bold text-2xl text-center tracking-wider">@(blog.Title)</h2>
+                        </a>
+                        <p class="card-date text-center text-gray-400 my-2 text-sm italic">Posted On @(blog.PostedOn.ToString("MMMM dd, yyyy", System.Globalization.CultureInfo.InvariantCulture))</p>
+                        <h5 class="card-context italic text-justify">
+                            @(blog.Content.Substring(0, 200)) ...
+                        </h5>
+                    </div>
+                    <div>
+                        <div class="flex justify-center items-center pb-1">
+                            <div class="w-14 border border-black"></div>
+                        </div>
+
+                        <div class="flex justify-between px-3 mt-2">
+                            <a href="/blogs/@(blog.BlogId)">
+                                <p class="text-center text-[#be9656] italic font-semibold text-xs tracking-widest">
+                                    Continue Reading
+                                </p>
+                            </a>
+
+                            <p class="text-center text-xs text-gray-400 italic">
+                                <span>@(blog.Comments.Count == 0 ? "No" : blog.Comments.Count)</span> Comments
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </section>
+
+
+    </div>
+
+    <partial name="_AdsArea" />
+
+</section>
+
+
+@section Scripts {
+    @* <script type="module" src="~/js/blogs.js"></script> *@
+}

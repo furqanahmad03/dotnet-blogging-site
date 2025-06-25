@@ -1,0 +1,125 @@
+﻿@{
+  ViewData["Title"] = "Home Page";
+  var GrandBlog = Model.FirstOrDefault();
+  var SubGrandBlog = Model.ElementAtOrDefault(1);
+  var OtherBlogs = Model.Skip(2);
+}
+@model System.Collections.Generic.List<X.Models.Blog>
+
+@if(Model.Count < 3)
+{
+   <div class="main-body max-w-7xl m-auto">
+    <h1>No Blogs Available</h1>
+   </div>
+}
+else
+{
+    <div class="main-body max-w-7xl m-auto">
+  <div class="grand-post times-new-roman">
+    <div class=" flex flex-col mt-24 items-center grand-blog-cover">
+      <p class="text-3xl">Grand</p>
+        <h1 class="text-9xl">BLOG</h1>
+    </div>
+    <div class="grand-post-image w-full h-[500px] -mt-16" style="background: url(data:image/png;base64,@(GrandBlog!.Image)) no-repeat center center; background-size: cover;"></div>
+
+    <div class="grand-post-content xl:px-32 px-14">
+      <p class="post-category text-[#be9656] text-center text-sm my-3 pt-7 tracking-widest">
+        @(GrandBlog!.Category.ToUpper()) / @(GrandBlog.Type.ToUpper())
+      </p>
+      <a href="/blogs/@(GrandBlog!.BlogId)">
+        <h2 class="post-title font-bold text-5xl text-center">@(GrandBlog.Title)</h2>
+      </a>
+
+      <div class="post-title-bottom-border flex justify-center items-center my-5">
+        <div class="w-36 border border-[#be9656]"></div>
+      </div>
+
+      <h5 class="italic text-center">
+        @(GrandBlog.Content.Substring(0, 500))
+      </h5>
+    </div>
+  </div>
+
+  <div class="divider mt-24"></div>
+
+  <section class="other-posts flex md:flex-row flex-col gap-10  xl:px-10 px-4">
+
+    <div class="sub-grand-post times-new-roman md:w-2/3 w-full">
+
+      <div class="w-full h-[500px]" style="background: url(data:image/png;base64,@(SubGrandBlog!.Image)) no-repeat center center; background-size: cover;"></div>
+
+      <div class="sub-grand-post-content">
+        <p class="post-category text-[#be9656] text-center text-sm my-3 pt-7 tracking-widest">
+          @(SubGrandBlog!.Category.ToUpper()) / @(SubGrandBlog.Type.ToUpper())
+        </p>
+        <a href="/blogs/@(SubGrandBlog!.BlogId)">
+          <h2 class="sub-grand-post-title font-bold text-5xl text-center">@(SubGrandBlog.Title)</h2>
+        </a>
+
+        <div class="sub-grand-post-title-bottom-border flex justify-center items-center my-5">
+          <div class="w-36 border border-[#be9656]"></div>
+        </div>
+
+        <p class="text-center text-gray-400 pb-4 italic">Posted On July 22, 2025</p>
+
+        <h5 class="italic text-justify">
+          @(SubGrandBlog.Content.Substring(0, 500))
+        </h5>
+
+        <div class="flex justify-center items-center my-5">
+          <div class="w-14 border border-black"></div>
+        </div>
+
+        <a href="/blogs/@(SubGrandBlog!.BlogId)">
+          <p class="text-center text-xs my-2 tracking-widest">
+            CONTINUE READING
+          </p>
+        </a>
+
+        <p class="text-center text-sm text-gray-400 pb-4 italic my-2">
+          @(SubGrandBlog.Comments.Count > 0 ? SubGrandBlog.Comments.Count + " Comments" : "No Comments")
+        </p>
+
+      </div>
+
+      <section id="blog-cards" class="grid md:grid-cols-2 grid-cols-1 mt-6 gap-7 border-b-2 border-gray-200 pb-10">
+        @foreach (var blog in OtherBlogs)
+        {
+          <div
+            class="card w-full shadow-lg rounded-lg overflow-hidden p-3 bg-slate-50 hover:scale-[1.03] transition-transform duration-300">
+            <img src="data:image/png;base64,@(blog!.Image)" alt="Post Image" class="w-full h-60 object-cover">
+            <div class="p-4">
+              <p class="card-category text-[#be9656] text-sm my-1 pt-5 tracking-widest text-center">
+                @(blog.Category.ToUpper()) / @(blog.Type.ToUpper())
+              </p>
+              <a href="/blogs/@(blog.BlogId)">
+                <h2 class="card-title font-bold text-2xl text-center tracking-wider">@(blog.Title)</h2>
+              </a>
+              <p class="card-date text-center text-gray-400 my-2 text-sm italic">Posted On @blog.PostedOn.ToString("MMMM dd, yyyy", System.Globalization.CultureInfo.InvariantCulture)</p>
+              <h5 class="card-context italic text-justify">
+                @(blog.Content.Substring(0, 255)) ...
+              </h5>
+            </div>
+          </div>
+        }
+      </section>
+
+      @* <div class="older-posts text-end text-sm tracking-wider text-gray-700 py-4">OLDER POSTS >></div> *@
+
+
+    </div>
+
+    <partial name="_AdsArea" />
+
+  </section>
+
+
+</div>
+}
+
+
+@section Scripts {
+  
+  <script type="module" src="~/js/home.js"></script>
+}
+

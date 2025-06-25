@@ -1,0 +1,59 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var userType = User.FindFirst("UserType")?.Value;
+}
+
+<section class="flex md:flex-row flex-col gap-10 xl:px-10 px-4 mt-24 mb-10">
+    <div id="penBackground"
+        class="md:p-10 p-5 rounded-md shadow-md border border-gray-300 md:mx-7 mx-auto w-full flex md:flex-row flex-col gap-4">
+        <div class="md:w-1/3 w-full flex md:flex-col flex-row md:justify-between">
+            <div
+                class="w-[150px] h-[150px] p-2 bg-transparent border-[2px] border-dashed border-yellow-950 rounded-full shadow-md mx-auto">
+                <div
+                    class="w-32 h-32 mx-auto rounded-full bg-yellow-800 flex items-center justify-center text-yellow-950 font-bold text-5xl box-border">
+                    FA</div>
+            </div>
+            <div class="md:block hidden bg-[#ffffffc0] p-4 rounded-md shadow-md border border-gray-300">
+                <div class="flex items-end border-b-2 pb-2 border-black">
+                    <img src="images/logo.png" alt="Blog" class="rounded-md shadow-md w-12 h-12 object-cover">
+                    <h4 class="text-xl tracking-widest">logEra</h4>
+                </div>
+                <p class="text-sm text-justify mt-1 p-2 tracking-wide">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem provident omnis temporibus
+                    explicabo quas voluptatum soluta deleniti, eius tenetur maxime ullam molestias, id sequi fuga.
+                    Tempora dolor nulla iure ducimus.
+                </p>
+            </div>
+        </div>
+        <div class="md:w-2/3 w-full bg-[#ffffffc0] p-7">
+            <div class="p-4">
+                <div class="contact-head mb-7">
+                    <h3 class="text-lg font-semibold">Your Profile</h3>
+                    <p class="text-gray-400 text-sm">Your can update your profile</p>
+                </div>
+                <form class="flex flex-col gap-4" asp-action="UpdateProfile" asp-controller="Profile" method="post"
+                    enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-red-700"></div>
+                    @Html.AntiForgeryToken()
+                    <input name="fullName" type="text" placeholder="FullName"
+                        class="w-full bg-gray-200 px-4 py-2 rounded-md outline-none" value="@(user.FullName)">
+                    <input type="email" placeholder="Email"
+                        class="w-full bg-gray-400 text-white px-4 py-2 rounded-md outline-none" value="@(user.Email)"
+                        disabled>
+                    <input name="phoneNumber" type="number" placeholder="Phone" value="@(string.IsNullOrEmpty(user.Phone) ? "" : user.Phone)"
+                        class="w-full bg-gray-200 px-4 py-2 rounded-md outline-none" required>
+                    <textarea name="aboutMe" rows="4" class="w-full bg-gray-200 px-4 py-2 rounded-md outline-none"
+                        placeholder="About" required>@(user.About)</textarea>
+                    <button type="submit"
+                        class="flex justify-center items-center rounded-md bg-green-800 text-white px-4 py-2">
+                        Update
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>

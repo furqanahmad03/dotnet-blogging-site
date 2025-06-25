@@ -1,0 +1,25 @@
+@Html.AntiForgeryToken()
+
+<table id="myTable" class="display bg-white">
+  <thead class="!bg-black text-white">
+    <tr>
+      <th style="width: 5%;">Sr.</th>
+      <th style="width: 20%;">Name</th>
+      <th style="width: 20%;">Email</th>
+      <th style="width: 15%;">Phone</th>
+      <th style="width: 40%;">Message</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var query in Model)
+    {
+      <tr>
+        <td>@(query.CustomerId)</td>
+        <td class="text-sm">@(query.FirstName + " " + query.LastName)</td>
+        <td class="text-sm"><a href="mailto:@(query.Email)"><i class="fa fa-envelope" aria-hidden="true"></i> hfurqan.se@gmail.com</a></td>
+        <td class="text-sm">@(query.Phone)</td>
+        <td class="text-xs">@(query.Message)</td>
+      </tr>
+    }
+  </tbody>
+</table>

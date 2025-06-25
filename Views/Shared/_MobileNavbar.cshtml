@@ -1,0 +1,50 @@
+@{
+  var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+  var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+
+  var currentPath = Context.Request.Path.Value?.ToLower();
+  var category = Context.Request.Query["category"].ToString().ToLower();
+}
+
+<div id="mobile-menu" class="mobile-menu lg:hidden">
+  <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+    <a href="/"
+      class="@(currentController == "Home" ? "!text-blue-500 bg-gray-200" : "!text-black") bg-gray-100 !text-black block px-3 py-2 rounded-md text-base font-medium transition-colors duration-150">Home</a>
+    <a href="/blogs"
+      class="@(currentController == "Blogs" ? "!text-blue-500 bg-gray-200" : "!text-black") hover:bg-gray-200 !text-black block px-3 py-2 rounded-md text-base font-medium transition-colors duration-150">Blogs</a>
+
+
+    <div class="relative">
+      <button id="mobile-categories-button"
+        class=" hover:bg-gray-200 !text-black w-full text-left px-3 py-2 rounded-md text-base font-medium flex justify-between items-center transition-colors duration-300 @(currentPath == "/filter" ? "!text-blue-500 bg-gray-200" : "!text-black")">
+        Categories
+        <svg class="h-5 w-5 rotate-chevron" id="mobile-categories-chevron" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+      <div id="mobile-categories-dropdown" class="mobile-categories-dropdown pl-4">
+        <a href="/filter?category=technology"
+          class="!text-black block px-3 py-2 text-sm hover:bg-gray-200 rounded-md transition-colors duration-150 @(currentPath == "/filter" && category == "technology" ? "!text-blue-500 bg-gray-200" : "!text-black")">Technology</a>
+        <a href="/filter?category=fashion"
+          class="!text-black block px-3 py-2 text-sm hover:bg-gray-200 rounded-md transition-colors duration-150 @(currentPath == "/filter" && category == "fashion" ? "!text-blue-500 bg-gray-200" : "!text-black")">Fashion</a>
+        <a href="/filter?category=sports"
+          class=" !text-black block px-3 py-2 text-sm hover:bg-gray-200 rounded-md transition-colors duration-150 @(currentPath == "/filter" && category == "sports" ? "!text-blue-500 bg-gray-200" : "!text-black")">Sports</a>
+        <a href="/filter?category=politics"
+          class="!text-black block px-3 py-2 text-sm hover:bg-gray-200 rounded-md transition-colors duration-150 @(currentPath == "/filter" && category == "politics" ? "!text-blue-500 bg-gray-200" : "!text-black")">Politics</a>
+        <a href="/filter?category=international"
+          class="!text-black block px-3 py-2 text-sm hover:bg-gray-200 rounded-md transition-colors duration-150 @(currentPath == "/filter" && category == "international" ? "!text-blue-500 bg-gray-200" : "!text-black")">International</a>
+      </div>
+    </div>
+
+    @* <a href="/community"
+      class="@(currentController == "Community" ? "!text-blue-500 bg-gray-200" : "!text-black") !text-black  hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-150">Community</a> *@
+    <a href="/contact"
+      class="@(currentController == "Contact" ? "!text-blue-500 bg-gray-200" : "!text-black") !text-black hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-150">Contact
+      Us</a>
+    <a href="/about"
+      class="@(currentController == "About" ? "!text-blue-500 bg-gray-200" : "!text-black") !text-black hover:bg-gray-200   block px-3 py-2 rounded-md text-base font-medium transition-colors duration-150">About</a>
+  </div>
+</div>

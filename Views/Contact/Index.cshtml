@@ -1,0 +1,131 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<section class="flex md:flex-row flex-col gap-10 xl:px-10 px-4 mt-24 mb-10">
+    <div id="penBackground"
+        class="md:p-10 p-5 rounded-md shadow-md border border-gray-300 md:mx-7 mx-auto w-full h-full flex md:flex-row flex-col gap-4">
+        <div class="md:w-1/3 w-full flex md:flex-col flex-row md:justify-between">
+            <div></div>
+            <div class="bg-[#ffffffc0] p-4 rounded-md shadow-md border border-gray-300">
+                <div class="flex items-end border-b-2 pb-2 border-black">
+                    <img src="/images/logo.png" alt="Blog" class="rounded-md shadow-md w-12 h-12 object-cover">
+                    <h4 class="text-xl tracking-widest">logEra</h4>
+                </div>
+                <p class="text-sm text-justify mt-1 p-2 tracking-wide">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem provident omnis temporibus
+                    explicabo quas voluptatum soluta deleniti, eius tenetur maxime ullam molestias, id sequi fuga.
+                    Tempora dolor nulla iure ducimus.
+                </p>
+            </div>
+        </div>
+        <div class="md:w-2/3 w-full bg-[#ffffffc0] p-7">
+            <div class="p-4">
+                <div class="contact-head mb-7">
+                    <h3 class="text-lg font-semibold">GET IN TOUCH</h3>
+                    <p class="text-gray-400 text-sm">24/7 We will answer your questions and problems</p>
+                </div>
+                <form id="contactForm" class="flex flex-col gap-4">
+                    <div class="flex md:flex-row flex-col gap-4">
+                        <input type="text" name="FirstName" id="firstName" placeholder="First Name"
+                            class="w-full bg-gray-200 px-4 py-2 rounded-md outline-none" required>
+                        <input type="text" name="LastName" id="lastName" placeholder="Last Name"
+                            class="w-full bg-gray-200 px-4 py-2 rounded-md outline-none" required>
+                    </div>
+                    <input type="email" name="email" id="email" placeholder="Email"
+                        class="w-full bg-gray-200 px-4 py-2 rounded-md outline-none" required>
+                    <input type="number" name="phone" id="phoneNumber" placeholder="Phone"
+                        class="w-full bg-gray-200 px-4 py-2 rounded-md outline-none" required>
+                    <textarea name="message" id="message" rows="4"
+                        class="w-full bg-gray-200 px-4 py-2 rounded-md outline-none" placeholder="Message"
+                        required></textarea>
+                    <button type="submit"
+                        class="flex justify-center items-center rounded-md bg-blue-800 text-white px-4 py-2">Send</button>
+
+                    <div id="successMessage" class="hidden text-green-600">
+                        @* response content *@
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#contactForm').on('submit', function (e) {
+            e.preventDefault();
+
+            var firstName = $('#firstName').val().trim();
+            var lastName = $('#lastName').val().trim();
+            var email = $('#email').val().trim();
+            var phoneNumber = $('#phoneNumber').val().trim();
+            var message = $('#message').val().trim();
+
+            if (!firstName || !lastName || !email || !phoneNumber || !message) {
+                $('#successMessage')
+                    .text("All fields are required.")
+                    .removeClass('hidden text-green-600')
+                    .addClass('text-red-600')
+                    .fadeIn();
+
+                setTimeout(() => {
+                    $('#successMessage').fadeOut();
+                }, 3000);
+                return;
+            }
+
+            if (phoneNumber.length <= 10) {
+                $('#successMessage')
+                    .text("Phone number is invalid.")
+                    .removeClass('hidden text-green-600')
+                    .addClass('text-red-600')
+                    .fadeIn();
+
+                setTimeout(() => {
+                    $('#successMessage').fadeOut();
+                }, 3000);
+                return;
+            }
+
+            var data = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phoneNumber: phoneNumber,
+                message: message
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/Contact/ContactInfo',
+                data: data,
+                success: function (response) {
+                    $('form')[0].reset();
+                    $('#successMessage')
+                        .removeClass('hidden text-red-600')
+                        .addClass('text-green-600')
+                        .text(response.message).fadeIn();
+                    setTimeout(() => {
+                        $('#successMessage').fadeOut();
+                    }, 2000);
+                },
+                error: function (error) {
+                    $('#successMessage')
+                        .text(response.message)
+                        .removeClass('hidden text-green-600')
+                        .addClass('text-red-600')
+                        .fadeIn();
+                    setTimeout(() => {
+                        $('#successMessage').fadeOut();
+                    }, 2000);
+                }
+            });
+        });
+    });
+</script>

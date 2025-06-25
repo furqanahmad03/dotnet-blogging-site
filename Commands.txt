@@ -1,0 +1,4 @@
+﻿npx tailwindcss -i ./wwwroot/css/site.css -o ./wwwroot/css/styles.css --watch
+
+
+<img src="data:image/jpeg;base64,@Model.Image" alt="Blog Image" />

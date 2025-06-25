@@ -1,0 +1,135 @@
+@* @{
+
+}
+
+<div>
+  <button class="open-modal-btn" id="openModalBtn">Login/Sign Up</button>
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <button class="close-modal-btn !text-black" id="closeModalBtn">&times;</button>
+      <div class="auth-container" id="authContainer">
+
+        <div class="auth-form-container auth-sign-up">
+          <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post"
+            class="bg-white flex flex-col items-center justify-center h-full px-10">
+            <h1 class="text-2xl font-bold mb-2">Create Account</h1>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="flex my-5">
+              <a href="#" class="border border-gray-300 rounded-full flex items-center justify-center w-10 h-10 mx-1">
+                <i class="fab fa-google"></i>
+              </a>
+              <a href="#" class="border border-gray-300 rounded-full flex items-center justify-center w-10 h-10 mx-1">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="border border-gray-300 rounded-full flex items-center justify-center w-10 h-10 mx-1">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#" class="border border-gray-300 rounded-full flex items-center justify-center w-10 h-10 mx-1">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+            <span class="text-xs my-2">or use your email for registration</span>
+            <div>
+              <input type="text" placeholder="Name" asp-for="Input.Name" autocomplete="name" aria-required="true"
+                class="form-control bg-gray-100 border-none my-2 py-2 px-4 rounded-lg w-full text-sm outline-none">
+            </div>
+            <div>
+              <input type="email" placeholder="Email" asp-for="Input.Email" autocomplete="username" aria-required="true"
+                class="form-control bg-gray-100 border-none my-2 py-2 px-4 rounded-lg w-full text-sm outline-none">
+              <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div>
+              <input type="password" placeholder="Password" asp-for="Input.Password" autocomplete="new-password"
+                aria-required="true"
+                class="form-control bg-gray-100 border-none my-2 py-2 px-4 rounded-lg w-full text-sm outline-none">
+              <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div>
+              <input type="password" placeholder="Password" asp-for="Input.ConfirmPassword" autocomplete="new-password"
+                aria-required="true"
+                class="form-control bg-gray-100 border-none my-2 py-2 px-4 rounded-lg w-full text-sm outline-none">
+              <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button id="registerSubmit" type="submit"
+              class="bg-[#512da8] text-white text-xs py-2 px-11 rounded-lg font-semibold tracking-wider uppercase mt-2 cursor-pointer border border-transparent">
+              Sign Up
+            </button>
+          </form>
+        </div>
+
+
+        <div class="auth-form-container auth-sign-in">
+          <form id="account" method="post" class="bg-white flex flex-col items-center justify-center h-full px-10">
+            <h1 class="text-2xl font-bold mb-2">Sign In</h1>
+            <div class="flex my-5">
+              <a href="#" class="border border-gray-300 rounded-full flex items-center justify-center w-10 h-10 mx-1">
+                <i class="fab fa-google"></i>
+              </a>
+              <a href="#" class="border border-gray-300 rounded-full flex items-center justify-center w-10 h-10 mx-1">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="border border-gray-300 rounded-full flex items-center justify-center w-10 h-10 mx-1">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="#" class="border border-gray-300 rounded-full flex items-center justify-center w-10 h-10 mx-1">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+            <span class="text-xs my-2">or use your email password</span>
+            <div>
+              <input type="email" placeholder="Email" asp-for="Input.Email" autocomplete="username" aria-required="true"
+                class="form-control bg-gray-100 border-none my-2 py-2 px-4 rounded-lg w-full text-sm outline-none">
+              <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div>
+              <input type="password" placeholder="Password" asp-for="Input.Password" autocomplete="current-password"
+                aria-required="true"
+                class="form-control bg-gray-100 border-none my-2 py-2 px-4 rounded-lg w-full text-sm outline-none">
+              <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div>
+              <div class="checkbox">
+                <label asp-for="Input.RememberMe" class="form-label">
+                  <input class="form-check-input" asp-for="Input.RememberMe" />
+                  @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+              </div>
+            </div>
+            <button id="login-submit" type="submit"
+              class="bg-[#512da8] text-white text-xs py-2 px-11 rounded-lg font-semibold tracking-wider uppercase mt-2 cursor-pointer border border-transparent">
+              Sign In
+            </button>
+          </form>
+        </div>
+
+
+        <div class="auth-toggle-container">
+          <div class="auth-toggle">
+
+            <div class="auth-toggle-panel auth-toggle-left">
+              <h1 class="text-2xl font-bold">Welcome Back!</h1>
+              <p class="text-sm my-5">Enter your personal details to use all of site features</p>
+              <button
+                class="bg-transparent border border-white text-white text-xs py-2 px-11 rounded-lg font-semibold tracking-wider uppercase cursor-pointer"
+                id="login">
+                Sign In
+              </button>
+            </div>
+
+
+            <div class="auth-toggle-panel auth-toggle-right">
+              <h1 class="text-2xl font-bold">Hello, Friend!</h1>
+              <p class="text-sm my-5">Register with your personal details to use all of site features
+              </p>
+              <button
+                class="bg-transparent border border-white text-white text-xs py-2 px-11 rounded-lg font-semibold tracking-wider uppercase cursor-pointer"
+                id="register">
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> *@
